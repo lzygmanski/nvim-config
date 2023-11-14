@@ -4,11 +4,13 @@ vim.diagnostic.config {
     spacing = 1,
     prefix = '·',
     severity_limit = 'Warning',
+    format = function()
+      return ''
+    end,
   },
   float = {
     border = 'single',
   },
-  underline = false,
   update_in_insert = false,
 }
 

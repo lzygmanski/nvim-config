@@ -38,15 +38,15 @@ local on_attach = function(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec(
       [[
-              hi LspReferenceRead cterm=bold ctermbg=red guibg=Gray
-              hi LspReferenceText cterm=bold ctermbg=red guibg=Gray
-              hi LspReferenceWrite cterm=bold ctermbg=red guibg=Gray
-              augroup lsp_document_highlight
-                autocmd! * <buffer>
-                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-              augroup END
-            ]],
+        hi LspReferenceRead cterm=bold ctermbg=red guibg=Gray
+        hi LspReferenceText cterm=bold ctermbg=red guibg=Gray
+        hi LspReferenceWrite cterm=bold ctermbg=red guibg=Gray
+        augroup lsp_document_highlight
+          autocmd! * <buffer>
+          autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+          autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+        augroup END
+      ]],
       false
     )
   end
@@ -83,8 +83,13 @@ local schemas = require('schemastore').json.schemas()
 local servers = {
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      completion = {
+        callSnippet = 'Replace',
+      },
+      diagnostics = {
+        globals = { 'vim' },
+      },
     },
   },
   jsonls = {
