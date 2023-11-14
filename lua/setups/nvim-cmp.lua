@@ -12,23 +12,23 @@ cmp.setup {
     end,
   },
   completion = {
-    completeopt = 'menu,menuone,select,noinsert'
+    completeopt = 'menu,menuone,select,noinsert',
   },
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = "buffer" },
-    { name = "path" },
+    { name = 'buffer' },
+    { name = 'path' },
   },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
   formatting = {
-    format = require("lspkind").cmp_format({
+    format = require('lspkind').cmp_format {
       maxwidth = 50,
-      ellipsis_char = "...",
-    }),
+      ellipsis_char = '...',
+    },
   },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),

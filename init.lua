@@ -1,17 +1,17 @@
-require("core.basic")
-require("core.lazy")
+require 'core.basic'
+require 'core.lazy'
 
-require("lazy").setup({
+require('lazy').setup {
   -- Theme
   {
-    "dracula/vim",
-    name = "dracula"
+    'dracula/vim',
+    name = 'dracula',
   },
   {
-    "rcarriga/nvim-notify",
-    opts = { background_colour = "#000000" }
+    'rcarriga/nvim-notify',
+    opts = { background_colour = '#000000' },
   },
-  "stevearc/dressing.nvim",
+  'stevearc/dressing.nvim',
 
   -- Navigation
   {
@@ -29,10 +29,10 @@ require("lazy").setup({
     },
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    tag = "nightly",
+    'nvim-tree/nvim-tree.lua',
+    tag = 'nightly',
     dependencies = {
-      "nvim-tree/nvim-web-devicons"
+      'nvim-tree/nvim-web-devicons',
     },
   },
 
@@ -42,8 +42,8 @@ require("lazy").setup({
     build = ':TSUpdate',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      "windwp/nvim-ts-autotag",
-      "windwp/nvim-autopairs"
+      'windwp/nvim-ts-autotag',
+      'windwp/nvim-autopairs',
     },
   },
 
@@ -53,9 +53,19 @@ require("lazy").setup({
     dependencies = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "b0o/schemastore.nvim",
-      { 'j-hui/fidget.nvim', opts = {} },
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'b0o/schemastore.nvim',
+      {
+        'j-hui/fidget.nvim',
+        opts = {
+          notification = {
+            window = {
+              winblend = 0,
+              border = 'single',
+            },
+          },
+        },
+      },
       'folke/neodev.nvim',
     },
   },
@@ -68,22 +78,32 @@ require("lazy").setup({
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'rafamadriz/friendly-snippets',
-      'onsails/lspkind.nvim'
-    }
+      'onsails/lspkind.nvim',
+    },
+  },
+
+  -- Linters & Formatters
+  { 'stevearc/conform.nvim' },
+  { 'mfussenegger/nvim-lint' },
+  {
+    'davidmh/cspell.nvim',
+    dependencies = {
+      { 'jose-elias-alvarez/null-ls.nvim' },
+    },
   },
 
   -- Git
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-  { "lewis6991/gitsigns.nvim",       opts = {} },
+  { 'lewis6991/gitsigns.nvim', opts = {} },
 
   -- Others
-  "ThePrimeagen/vim-be-good",
-  "mbbill/undotree",
-  "tpope/vim-sleuth",                             -- alternative to "editorconfig/editorconfig-vim"
-  { 'folke/which-key.nvim',          opts = {} },
-  { 'numToStr/Comment.nvim',         opts = {} }, -- alternative to "tpope/vim-commentary",
-  { "simrat39/symbols-outline.nvim", opts = {} },
+  'ThePrimeagen/vim-be-good',
+  'mbbill/undotree',
+  'tpope/vim-sleuth', -- alternative to "editorconfig/editorconfig-vim"
+  { 'folke/which-key.nvim', opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} }, -- alternative to "tpope/vim-commentary",
+  { 'simrat39/symbols-outline.nvim', opts = {} },
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -93,44 +113,36 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'onedark',
-        component_separators = '|',
+        component_separators = '·',
         section_separators = '',
       },
     },
   },
-
-  -- TODO conform
-
-  -- TODO lint
-
-  -- TODO cspell
-})
+}
 
 -- Theme
-require('setups.theme')
+require 'setups.theme'
 
 -- Navigation
-require('setups.nvim-tree')
-require('setups.telescope')
+require 'setups.nvim-tree'
+require 'setups.telescope'
 
 -- Treesitter
-require('setups.nvim-treesitter')
+require 'setups.nvim-treesitter'
 
 -- Lsp
-require('setups.lspconfig')
+require 'setups.lspconfig'
 
 -- Autocompletion
-require('setups.nvim-cmp')
+require 'setups.nvim-cmp'
+
+-- Linters & Formatters
+require 'setups.lint-format'
+require 'setups.diagnostic'
 
 -- Others
----- Undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndo tree" })
+vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo tree' })
+vim.keymap.set('n', '<leader>s', vim.cmd.SymbolsOutline, { desc = '[S]ymbol outline' })
 
----- Symbols
-vim.keymap.set("n", "<leader>s", vim.cmd.SymbolsOutline, { desc = "[S]ymbol outline" })
-
---- Notify
-require("telescope").load_extension("notify")
-vim.notify = require("notify")
+require('telescope').load_extension 'notify'
+vim.notify = require 'notify'
