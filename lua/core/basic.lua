@@ -39,6 +39,10 @@ vim.opt.spelllang = "en_us"
 vim.opt.swapfile = false
 vim.opt.undofile = true
 
+-- Options
+vim.api.nvim_set_option("termguicolors", true)
+vim.api.nvim_set_option("background", "dark")
+
 --- Keys
 vim.keymap.set("x", "<leader>p", '"_dP', { noremap = true, desc = "Replace without overwriting registry" })
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, silent = true, desc = "Esc from terminal mode" })

@@ -7,6 +7,11 @@ require("lazy").setup({
     "dracula/vim",
     name = "dracula"
   },
+  {
+    "rcarriga/nvim-notify",
+    opts = { background_colour = "#000000" }
+  },
+  "stevearc/dressing.nvim",
 
   -- Navigation
   {
@@ -37,6 +42,8 @@ require("lazy").setup({
     build = ':TSUpdate',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
+      "windwp/nvim-ts-autotag",
+      "windwp/nvim-autopairs"
     },
   },
 
@@ -61,17 +68,22 @@ require("lazy").setup({
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
       'rafamadriz/friendly-snippets',
+      'onsails/lspkind.nvim'
     }
   },
 
   -- Git
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
+  { "lewis6991/gitsigns.nvim",       opts = {} },
 
-  -- Basic
-  "tpope/vim-sleuth", -- alternative to "editorconfig/editorconfig-vim"
-  { 'folke/which-key.nvim', opts = {} },
-  { 'numToStr/Comment.nvim', opts = {} }, -- alternative to "tpope/vim-commentary",
+  -- Others
+  "ThePrimeagen/vim-be-good",
+  "mbbill/undotree",
+  "tpope/vim-sleuth",                             -- alternative to "editorconfig/editorconfig-vim"
+  { 'folke/which-key.nvim',          opts = {} },
+  { 'numToStr/Comment.nvim',         opts = {} }, -- alternative to "tpope/vim-commentary",
+  { "simrat39/symbols-outline.nvim", opts = {} },
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -89,17 +101,15 @@ require("lazy").setup({
     },
   },
 
-  -- Learning
-  "ThePrimeagen/vim-be-good",
+  -- TODO conform
+
+  -- TODO lint
+
+  -- TODO cspell
 })
 
 -- Theme
-vim.cmd.colorscheme("dracula")
-vim.api.nvim_set_option("termguicolors", true)
-vim.api.nvim_set_option("background", "dark")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "StatusLine", { bg = "#282A36" })
+require('setups.theme')
 
 -- Navigation
 require('setups.nvim-tree')
@@ -113,3 +123,14 @@ require('setups.lspconfig')
 
 -- Autocompletion
 require('setups.nvim-cmp')
+
+-- Others
+---- Undotree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, { desc = "[U]ndo tree" })
+
+---- Symbols
+vim.keymap.set("n", "<leader>s", vim.cmd.SymbolsOutline, { desc = "[S]ymbol outline" })
+
+--- Notify
+require("telescope").load_extension("notify")
+vim.notify = require("notify")
