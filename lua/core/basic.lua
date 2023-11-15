@@ -56,7 +56,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
 local custom_au_cmd_group = vim.api.nvim_create_augroup('CustomAuCmd', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = custom_au_cmd_group, pattern = '*', command = [[:%s/\s\+$//e]] })
 

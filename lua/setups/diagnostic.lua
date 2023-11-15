@@ -9,7 +9,7 @@ vim.diagnostic.config {
     end,
   },
   float = {
-    border = 'single',
+    border = 'rounded',
   },
   update_in_insert = false,
 }
