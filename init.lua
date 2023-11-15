@@ -4,7 +4,7 @@ require 'core.lazy'
 require('lazy').setup {
   -- Theme
   {
-    'dracula/vim',
+    'Mofiqul/dracula.nvim',
     name = 'dracula',
   },
   {
@@ -143,6 +143,3 @@ require 'setups.diagnostic'
 -- Others
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo tree' })
 vim.keymap.set('n', '<leader>s', vim.cmd.SymbolsOutline, { desc = '[S]ymbol outline' })
-
-require('telescope').load_extension 'notify'
-vim.notify = require 'notify'
