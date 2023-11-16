@@ -21,7 +21,6 @@ require('conform').setup {
     lsp_fallback = true,
   },
 }
-
 -- Linters
 require('lint').linters_by_ft = {
   lua = { 'luacheck' },
@@ -48,6 +47,7 @@ require('null-ls').setup {
   sources = {
     require('cspell').diagnostics.with {
       diagnostics_postprocess = function(diagnostic)
+        diagnostic.message = ''
         diagnostic.severity = vim.diagnostic.severity.INFO
       end,
       find_json = config.find_json,
