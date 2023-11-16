@@ -89,7 +89,7 @@ local servers = {
       },
       diagnostics = {
         disable = { 'missing-fields', 'incomplete-signature-doc' },
-        globals = { 'vim' },
+        globals = { 'vim', 'hello' },
       },
     },
   },

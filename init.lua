@@ -1,3 +1,13 @@
+hello = [[
+██╗  ██╗███████╗██╗     ██╗      ██████╗         ██╗    ██╗ ██████╗ ██████╗ ██╗     ██████╗ ██╗
+██║  ██║██╔════╝██║     ██║     ██╔═══██╗        ██║    ██║██╔═══██╗██╔══██╗██║     ██╔══██╗██║
+███████║█████╗  ██║     ██║     ██║   ██║        ██║ █╗ ██║██║   ██║██████╔╝██║     ██║  ██║██║
+██╔══██║██╔══╝  ██║     ██║     ██║   ██║        ██║███╗██║██║   ██║██╔══██╗██║     ██║  ██║╚═╝
+██║  ██║███████╗███████╗███████╗╚██████╔╝        ╚███╔███╔╝╚██████╔╝██║  ██║███████╗██████╔╝██╗
+╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ ╚═════╝          ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═════╝ ╚═╝
+
+]]
+
 require 'core.basic'
 require 'core.lazy'
 
@@ -97,6 +107,20 @@ require('lazy').setup {
   'tpope/vim-rhubarb',
   { 'lewis6991/gitsigns.nvim', opts = {} },
 
+  -- Note Taking
+  {
+    'nvim-neorg/neorg',
+    build = ':Neorg sync-parsers',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  -- Dashboard
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
+  },
+
   -- Others
   'ThePrimeagen/vim-be-good',
   'mbbill/undotree',
@@ -120,35 +144,6 @@ require('lazy').setup {
       },
     },
   },
-  {
-    'nvim-neorg/neorg',
-    build = ':Neorg sync-parsers',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('neorg').setup {
-        load = {
-          ['core.defaults'] = {},
-          ['core.concealer'] = {},
-          ['core.dirman'] = {
-            config = {
-              workspaces = {
-                notes = '~/notes',
-              },
-              default_workspace = 'notes',
-            },
-          },
-        },
-      }
-    end,
-  },
-  {
-    'nvimdev/dashboard-nvim',
-    event = 'VimEnter',
-    config = function()
-      require('dashboard').setup {}
-    end,
-    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
-  },
 }
 
 -- Theme
@@ -170,6 +165,12 @@ require 'setups.nvim-cmp'
 -- Linters & Formatters
 require 'setups.lint-format'
 require 'setups.diagnostic'
+
+-- Note Taking
+require 'setups.neorg'
+
+-- Dashboard
+require 'setups.dashboard'
 
 -- Others
 vim.keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo tree' })
