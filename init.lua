@@ -107,7 +107,9 @@ require('lazy').setup {
   {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
-    opts = {},
+    opts = {
+      exclude = { filetypes = { 'dashboard', 'lspinfo', 'checkhealth', 'help', 'man', 'NvimTree' } },
+    },
   },
   {
     'nvim-lualine/lualine.nvim',
@@ -117,6 +119,35 @@ require('lazy').setup {
         section_separators = '',
       },
     },
+  },
+  {
+    'nvim-neorg/neorg',
+    build = ':Neorg sync-parsers',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {},
+          ['core.concealer'] = {},
+          ['core.dirman'] = {
+            config = {
+              workspaces = {
+                notes = '~/notes',
+              },
+              default_workspace = 'notes',
+            },
+          },
+        },
+      }
+    end,
+  },
+  {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {}
+    end,
+    dependencies = { { 'nvim-tree/nvim-web-devicons' } },
   },
 }
 

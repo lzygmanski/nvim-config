@@ -4,9 +4,9 @@ vim.diagnostic.config {
     spacing = 1,
     prefix = '·',
     severity_limit = 'Warning',
-    format = function()
-      return ''
-    end,
+    -- format = function()
+    --   return ''
+    -- end,
   },
   float = {
     border = 'rounded',

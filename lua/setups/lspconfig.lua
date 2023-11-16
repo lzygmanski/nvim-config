@@ -88,6 +88,7 @@ local servers = {
         callSnippet = 'Replace',
       },
       diagnostics = {
+        disable = { 'missing-fields', 'incomplete-signature-doc' },
         globals = { 'vim' },
       },
     },
