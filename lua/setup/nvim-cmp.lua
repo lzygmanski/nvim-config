@@ -19,6 +19,25 @@ return {
         },
       },
     },
+    {
+      'zbirenbaum/copilot-cmp',
+      dependencies = {
+        {
+          'zbirenbaum/copilot.lua',
+          cmd = 'Copilot',
+          event = 'InsertEnter',
+          config = function()
+            require('copilot').setup {
+              suggestion = { enabled = false },
+              panel = { enabled = false },
+            }
+          end,
+        },
+      },
+      config = function()
+        require('copilot_cmp').setup()
+      end,
+    },
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
@@ -27,9 +46,22 @@ return {
   config = function()
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
+    local lspkind = require 'lspkind'
     luasnip.config.setup {}
 
     cmp.setup {
+      ---@diagnostic disable-next-line: missing-fields
+      formatting = {
+        format = lspkind.cmp_format {
+          symbol_map = {
+            Copilot = '',
+          },
+        },
+      },
+      window = {
+        completion = cmp.config.window.bordered {},
+        documentation = cmp.config.window.bordered {},
+      },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -67,12 +99,14 @@ return {
           name = 'lazydev',
           group_index = 0,
         },
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
       },
     }
+
+    vim.api.nvim_set_hl(0, 'CmpItemKindCopilot', { fg = '#6CC644' })
   end,
 }
-
