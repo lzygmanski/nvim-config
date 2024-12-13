@@ -40,23 +40,25 @@ vim.opt.swapfile = false
 vim.opt.undofile = true
 
 -- Options
-vim.api.nvim_set_option('termguicolors', true)
-vim.api.nvim_set_option('background', 'dark')
+vim.api.nvim_set_option_value('termguicolors', true, {})
+vim.api.nvim_set_option_value('background', 'dark', {})
 
 --- Keys
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('x', '<leader>p', '"_dP', { noremap = true, desc = 'Replace without overwriting registry' })
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Esc from terminal mode' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 --- Aucmd
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('YankHighlightGroup', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = highlight_group,
-  pattern = '*',
 })
-local custom_au_cmd_group = vim.api.nvim_create_augroup('CustomAuCmd', { clear = true })
+
+local custom_au_cmd_group = vim.api.nvim_create_augroup('CustomAuCmdGroup', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, { group = custom_au_cmd_group, pattern = '*', command = [[:%s/\s\+$//e]] })
 
 vim.api.nvim_create_autocmd(
