@@ -12,6 +12,7 @@ return {
       overrides = function(colors)
         return {
           TelescopeNormal = { fg = colors.fg, bg = 'none' },
+          NvimTreeNormalFloat = { fg = colors.fg, bg = 'none' },
           Pmenu = { fg = colors.white, bg = 'none' },
           PmenuSbar = { bg = 'none' },
         }
