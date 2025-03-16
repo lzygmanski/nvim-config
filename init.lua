@@ -37,6 +37,7 @@ require('lazy').setup {
 
   -- Autocompletion
   require 'setup.nvim-cmp',
+  require 'setup.chat-gpt',
 
   -- Linters & Formatters
   require 'setup.conform',

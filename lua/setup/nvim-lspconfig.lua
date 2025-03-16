@@ -114,6 +114,7 @@ return {
       vuels = {},
       tailwindcss = {},
       eslint = {},
+      clangd = {},
     }
 
     -- Mason
@@ -125,6 +126,8 @@ return {
       'codelldb',
 
       -- Linter
+
+      'eslint_d',
       'shellcheck',
       'luacheck',
       'flake8',
@@ -134,6 +137,7 @@ return {
       'prettierd',
       'stylua',
       'shfmt',
+      'clang-format',
     })
 
     require('mason-tool-installer').setup {
