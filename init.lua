@@ -22,6 +22,12 @@ require('lazy').setup {
   require 'setup.telescope',
   require 'setup.nvim-tree',
 
+  -- LSP & DAP installation
+  require 'setup.mason',
+
+  -- DAP
+  require 'setup.nvim-dap',
+
   -- LSP
   require 'setup.lazydev',
   require 'setup.nvim-lspconfig',

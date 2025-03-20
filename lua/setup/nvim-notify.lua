@@ -1,7 +1,8 @@
 return {
   'rcarriga/nvim-notify',
-  opts = { background_colour = '#000000' },
-  config = function()
-    vim.notify = require 'notify'
+  config = function(_, opts)
+    require('notify').setup(vim.tbl_extend('keep', {
+      background_colour = '#000000',
+    }, opts))
   end,
 }
