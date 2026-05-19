@@ -5,7 +5,7 @@ return {
   event = 'VeryLazy',
   config = function()
     require('chatgpt').setup {
-      api_key_cmd = 'gpg --decrypt ' .. home .. 'chatgpt/secret.txt.gpg',
+      api_key_cmd = 'gpg --quiet --batch --decrypt ' .. home .. '/chatgpt/secret.txt.gpg',
     }
   end,
   dependencies = {

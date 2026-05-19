@@ -40,6 +40,10 @@ require('lazy').setup {
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
   { 'lewis6991/gitsigns.nvim', opts = {} },
+  {
+    'esmuellert/codediff.nvim',
+    cmd = 'CodeDiff',
+  },
 
   -- Autocompletion
   require 'setup.nvim-cmp',
