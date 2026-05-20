@@ -74,11 +74,22 @@ return {
 
     -- UI
     local border = 'rounded'
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = border,
-    })
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-      border = border,
-    })
+    vim.diagnostic.config {
+      float = { border = border },
+    }
+
+    local orig_hover = vim.lsp.buf.hover
+    vim.lsp.buf.hover = function(opts)
+      opts = opts or {}
+      opts.border = opts.border or border
+      return orig_hover(opts)
+    end
+
+    local orig_signature_help = vim.lsp.buf.signature_help
+    vim.lsp.buf.signature_help = function(opts)
+      opts = opts or {}
+      opts.border = opts.border or border
+      return orig_signature_help(opts)
+    end
   end,
 }

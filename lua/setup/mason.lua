@@ -9,29 +9,29 @@ return {
   },
 
   config = function()
-    -- Servers
-    local schemas = require('schemastore').json.schemas()
+    local json_schemas = require('schemastore').json.schemas()
+    local yaml_schemas = require('schemastore').yaml.schemas()
+
     local servers = {
       lua_ls = {
-        Lua = {
-          telemetry = { enable = false },
-          completion = {
-            callSnippet = 'Replace',
-          },
-          diagnostics = {
-            disable = { 'missing-fields', 'incomplete-signature-doc' },
-            globals = { 'vim', 'hello' },
+        settings = {
+          Lua = {
+            telemetry = { enable = false },
+            completion = {
+              callSnippet = 'Replace',
+            },
+            diagnostics = {
+              disable = { 'missing-fields', 'incomplete-signature-doc' },
+              globals = { 'vim', 'hello' },
+            },
           },
         },
       },
       jsonls = {
-        json = {
-          schemas = schemas,
-        },
-      },
-      yamlls = {
-        json = {
-          schemas = schemas,
+        settings = {
+          json = {
+            schemas = json_schemas,
+          },
         },
       },
       emmet_ls = {},
@@ -42,7 +42,6 @@ return {
       html = {},
       cssls = {},
       graphql = {},
-      ts_ls = {},
       vuels = {},
       tailwindcss = {},
       eslint = {},
@@ -50,22 +49,16 @@ return {
       cmake = {},
     }
 
-    -- Mason
-    require('mason').setup()
+    require('mason').setup {
+      PATH = 'prepend',
+    }
 
-    local ensure_installed = vim.tbl_keys(servers or {})
+    local ensure_installed = vim.tbl_keys(servers)
     vim.list_extend(ensure_installed, {
-      -- DAP
-      -- Manage by mason-nvim-dap plugin, check below
-
-      -- Linter
       'eslint_d',
       'shellcheck',
-      'luacheck',
       'flake8',
       'cspell',
-
-      -- Formatter
       'prettierd',
       'stylua',
       'shfmt',
@@ -89,19 +82,50 @@ return {
       handlers = {},
     }
 
-    -- NVIM capabilities setup
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-    ---@diagnostic disable-next-line: missing-fields
+    for server_name, server in pairs(servers) do
+      vim.lsp.config(server_name, vim.tbl_deep_extend('force', {
+        capabilities = capabilities,
+      }, server))
+    end
+
     require('mason-lspconfig').setup {
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_enable = {
+        exclude = { 'ts_ls', 'yamlls' },
       },
     }
+
+    -- NOTE: ts_ls and yamlls are intentionally NOT Mason-managed here.
+    -- Mason resolves exact package versions from its registry, which can fail on
+    -- machines that use a private npm mirror/registry with partial package sync.
+    -- Instead, keep the Neovim config portable by attaching these servers when
+    -- their executables are already available on PATH (for example via npm -g).
+    -- See ./bootstrap-tools.sh for the recommended cross-machine install flow.
+
+    if vim.fn.executable 'typescript-language-server' == 1 then
+      vim.lsp.config('ts_ls', {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable 'ts_ls'
+    end
+
+    if vim.fn.executable 'yaml-language-server' == 1 then
+      vim.lsp.config('yamlls', {
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemaStore = {
+              enable = false,
+              url = '',
+            },
+            schemas = yaml_schemas,
+          },
+        },
+      })
+      vim.lsp.enable 'yamlls'
+    end
   end,
 }
