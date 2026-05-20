@@ -36,6 +36,11 @@ require('lazy').setup {
   -- Treesitter
   require 'setup.nvim-treesitter',
 
+  {
+    'davidmh/mdx.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+
   -- Git
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
@@ -47,7 +52,7 @@ require('lazy').setup {
 
   -- Autocompletion
   require 'setup.nvim-cmp',
-  require 'setup.chat-gpt',
+  -- require 'setup.chat-gpt',
 
   -- Linters & Formatters
   require 'setup.conform',
@@ -62,6 +67,7 @@ require('lazy').setup {
   require 'setup.lualine',
   require 'setup.indent-blankline',
   require 'setup.vim-tmux-navigator',
+  require 'setup.kulala',
   'tpope/vim-sleuth', -- alternative to "editorconfig/editorconfig-vim"
   { 'numToStr/Comment.nvim', opts = {} }, -- alternative to "tpope/vim-commentary",
 }
