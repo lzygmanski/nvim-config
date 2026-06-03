@@ -14,6 +14,13 @@ return {
   },
   config = function()
     require('telescope').setup {
+      defaults = {
+        preview = {
+          -- Telescope 0.1.x still expects the pre-rewrite nvim-treesitter API here.
+          -- Keep previews working by using regex syntax highlighting instead.
+          treesitter = false,
+        },
+      },
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
@@ -35,7 +42,9 @@ return {
         current_dir = vim.fn.fnamemodify(current_file, ':h')
       end
 
-      local git_root = vim.fn.systemlist('git -C ' .. vim.fn.escape(current_dir, ' ') .. ' rev-parse --show-toplevel')[1]
+      local git_root = vim.fn.systemlist(
+        'git -C ' .. vim.fn.escape(current_dir, ' ') .. ' rev-parse --show-toplevel'
+      )[1]
       if vim.v.shell_error ~= 0 then
         print 'Not a git repository. Searching on current working directory'
         return cwd

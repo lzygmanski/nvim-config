@@ -49,17 +49,20 @@ return {
       cmake = {},
     }
 
+    local mason_managed_servers = vim.tbl_filter(function(server_name)
+      return server_name ~= 'pyright'
+    end, vim.tbl_keys(servers))
+
     require('mason').setup {
       PATH = 'prepend',
     }
 
-    local ensure_installed = vim.tbl_keys(servers)
+    local ensure_installed = vim.deepcopy(mason_managed_servers)
     vim.list_extend(ensure_installed, {
       'eslint_d',
       'shellcheck',
       'flake8',
       'cspell',
-      'prettierd',
       'stylua',
       'shfmt',
       'clang-format',
@@ -92,13 +95,13 @@ return {
     end
 
     require('mason-lspconfig').setup {
-      ensure_installed = vim.tbl_keys(servers),
+      ensure_installed = mason_managed_servers,
       automatic_enable = {
-        exclude = { 'ts_ls', 'yamlls' },
+        exclude = { 'ts_ls', 'yamlls', 'pyright' },
       },
     }
 
-    -- NOTE: ts_ls and yamlls are intentionally NOT Mason-managed here.
+    -- NOTE: ts_ls, yamlls, and pyright are intentionally NOT Mason-managed here.
     -- Mason resolves exact package versions from its registry, which can fail on
     -- machines that use a private npm mirror/registry with partial package sync.
     -- Instead, keep the Neovim config portable by attaching these servers when
@@ -126,6 +129,10 @@ return {
         },
       })
       vim.lsp.enable 'yamlls'
+    end
+
+    if vim.fn.executable 'pyright-langserver' == 1 then
+      vim.lsp.enable 'pyright'
     end
   end,
 }
