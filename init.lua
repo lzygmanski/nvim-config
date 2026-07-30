@@ -59,6 +59,7 @@ require('lazy').setup {
   require 'setup.nvim-lint',
 
   -- Helpers
+  require 'setup.writing',
   require 'setup.dashboard',
   require 'setup.symbols-outline',
   require 'setup.undotree',
