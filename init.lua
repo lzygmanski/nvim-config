@@ -49,6 +49,7 @@ require('lazy').setup {
     'esmuellert/codediff.nvim',
     cmd = 'CodeDiff',
   },
+  require 'setup.git-worktree',
 
   -- Autocompletion
   require 'setup.nvim-cmp',
